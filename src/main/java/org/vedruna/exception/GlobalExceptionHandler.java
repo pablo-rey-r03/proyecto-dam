@@ -9,7 +9,7 @@ import org.hibernate.exception.DataException;
 import org.jboss.resteasy.reactive.server.ServerExceptionMapper;
 import org.vedruna.model.dto.message.ErrorMessage;
 
-import java.sql.SQLException;
+import java.util.Arrays;
 
 @ApplicationScoped
 public class GlobalExceptionHandler {
@@ -21,7 +21,8 @@ public class GlobalExceptionHandler {
                 .entity(new ErrorMessage(
                         Response.Status.NOT_FOUND.getStatusCode(),
                         "Recurso no encontrado.",
-                        ex.getMessage()
+                        ex.getMessage(),
+                        Arrays.toString(ex.getStackTrace())
                 ))
                 .build();
     }
@@ -33,7 +34,8 @@ public class GlobalExceptionHandler {
                 .entity(new ErrorMessage(
                         Response.Status.BAD_REQUEST.getStatusCode(),
                         "El argumento proporcionado no es válido.",
-                        ex.getMessage()
+                        ex.getMessage(),
+                        Arrays.toString(ex.getStackTrace())
                 ))
                 .build();
     }
@@ -45,7 +47,8 @@ public class GlobalExceptionHandler {
                 .entity(new ErrorMessage(
                         Response.Status.BAD_REQUEST.getStatusCode(),
                         "Los datos no son válidos para el esquema de la base de datos.",
-                        ex.getMessage()
+                        ex.getMessage(),
+                        Arrays.toString(ex.getStackTrace())
                 ))
                 .build();
     }
@@ -57,7 +60,8 @@ public class GlobalExceptionHandler {
                 .entity(new ErrorMessage(
                         Response.Status.BAD_REQUEST.getStatusCode(),
                         "Error relacionado con el valor de una propiedad.",
-                        ex.getMessage()
+                        ex.getMessage(),
+                        Arrays.toString(ex.getStackTrace())
                 ))
                 .build();
     }
@@ -69,22 +73,37 @@ public class GlobalExceptionHandler {
                 .entity(new ErrorMessage(
                         Response.Status.BAD_REQUEST.getStatusCode(),
                         "Se ha violado una restricción del modelo.",
-                        ex.getMessage()
+                        ex.getMessage(),
+                        Arrays.toString(ex.getStackTrace())
                 ))
                 .build();
     }
 
-//    @ServerExceptionMapper(Exception.class)
-//    public Response handleGeneral(Exception ex) {
-//        return Response
-//                .status(Response.Status.INTERNAL_SERVER_ERROR)
-//                .entity(
-//                        new ErrorMessage(
-//                                Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(),
-//                                "Se ha producido un error",
-//                                ex.getMessage()
-//                        )
-//                )
-//                .build();
-//    }
+    @ServerExceptionMapper(NullPointerException.class)
+    public Response handleNullPointer(NullPointerException ex) {
+        return Response
+                .status(Response.Status.BAD_REQUEST)
+                .entity(new ErrorMessage(
+                        Response.Status.BAD_REQUEST.getStatusCode(),
+                        "Se ha accedido a una entidad nula.",
+                        ex.getMessage(),
+                        Arrays.toString(ex.getStackTrace())
+                ))
+                .build();
+    }
+
+    @ServerExceptionMapper(Exception.class)
+    public Response handleGeneral(Exception ex) {
+        return Response
+                .status(Response.Status.INTERNAL_SERVER_ERROR)
+                .entity(
+                        new ErrorMessage(
+                                Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(),
+                                "Se ha producido un error",
+                                ex.getMessage(),
+                                Arrays.toString(ex.getStackTrace())
+                        )
+                )
+                .build();
+    }
 }

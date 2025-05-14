@@ -13,4 +13,5 @@ public class ErrorMessage {
     private int status;
     private String error;
     private String detail;
+    private String stack;
 }

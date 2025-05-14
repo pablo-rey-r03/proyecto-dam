@@ -5,7 +5,6 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.vedruna.model.Company;
 import org.vedruna.model.SubcontractingRelationship;
 import org.vedruna.model.dto.NewCompanyDTO;
 import org.vedruna.model.dto.NewSubcontractingRelationshipDTO;
@@ -51,7 +50,7 @@ public class CompanyResource {
         return Response
                 .status(Response.Status.CREATED)
                 .entity(
-                        new ResponseEntityDTO<Company>(
+                        new ResponseEntityDTO<>(
                                 "Empresa creada correctamente.",
                                 companyRepository.create(newCompanyDTO)
                         )
@@ -66,7 +65,7 @@ public class CompanyResource {
         return Response
                 .status(Response.Status.NO_CONTENT)
                 .entity(
-                        new ResponseEntityDTO<Company>(
+                        new ResponseEntityDTO<>(
                                 "Empresa eliminada correctamente.",
                                 companyRepository.delete(id)
                         )
@@ -80,7 +79,7 @@ public class CompanyResource {
     public Response updateCompany(@NotNull @PathParam("id") Long id, NewCompanyDTO companyDTO) {
         return Response
                 .status(Response.Status.CREATED)
-                .entity(new ResponseEntityDTO<Company>(
+                .entity(new ResponseEntityDTO<>(
                         "Se ha actualizado correctamente la empresa con id " + id,
                         companyRepository.update(id, companyDTO)
                 ))
@@ -131,9 +130,42 @@ public class CompanyResource {
     ) {
         return Response
                 .status(Response.Status.CREATED)
-                .entity(new ResponseEntityDTO<SubcontractingRelationship>(
+                .entity(new ResponseEntityDTO<>(
                         "Se ha creado la relación entre empresas correctamente.",
                         subRepo.create(contractorId, subcontractId, srDTO)
+                ))
+                .build();
+    }
+
+    @PUT
+    @Path("{contId}/hires/{subId}")
+    @Authenticated
+    public Response updateRelation(
+            @NotNull @PathParam("contId") Long contractorId,
+            @NotNull @PathParam("subId") Long subcontractId,
+            @NotNull NewSubcontractingRelationshipDTO srDTO
+    ) {
+        return Response
+                .status(Response.Status.CREATED)
+                .entity(new ResponseEntityDTO<>(
+                        "Se ha actualizado la relación entre empresas correctamente.",
+                        subRepo.update(contractorId, subcontractId, srDTO)
+                ))
+                .build();
+    }
+
+    @DELETE
+    @Path("{contId}/fires/{subId}")
+    @Authenticated
+    public Response deleteRelation(
+            @NotNull @PathParam("contId") Long contractorId,
+            @NotNull @PathParam("subId") Long subcontractId
+    ) {
+        return Response
+                .status(Response.Status.NO_CONTENT)
+                .entity(new ResponseEntityDTO<>(
+                        "Se ha eliminado la relación entre empresas correctamente.",
+                        subRepo.delete(contractorId, subcontractId)
                 ))
                 .build();
     }
