@@ -66,10 +66,10 @@ public class Document {
     private String additional_info;
 
     @Column(length = 512)
-    private String filePath;
+    private String file_path;
 
     public Document(ValidationState validation_state, Company contractor, Company subcontract, AddresseeType addressee_type, String name, LocalDate date,
-            LocalDate expiration_date, LocalDate validation_date, Employee employee, String additional_info, String filePath) {
+            LocalDate expiration_date, LocalDate validation_date, Employee employee, String additional_info, String file_path) {
         this.validation_state = validation_state;
         this.contractor = contractor;
         this.subcontract = subcontract;
@@ -80,6 +80,6 @@ public class Document {
         this.validation_date = validation_date;
         this.employee = employee;
         this.additional_info = additional_info;
-        this.filePath = filePath;
+        this.file_path = file_path;
     }
 }

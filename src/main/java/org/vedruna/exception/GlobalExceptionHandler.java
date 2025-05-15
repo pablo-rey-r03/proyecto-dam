@@ -6,6 +6,7 @@ import jakarta.ws.rs.core.Response;
 import org.hibernate.PropertyValueException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.DataException;
+import org.hibernate.exception.SQLGrammarException;
 import org.jboss.resteasy.reactive.server.ServerExceptionMapper;
 import org.vedruna.model.dto.message.ErrorMessage;
 
@@ -92,18 +93,31 @@ public class GlobalExceptionHandler {
                 .build();
     }
 
-    @ServerExceptionMapper(Exception.class)
-    public Response handleGeneral(Exception ex) {
+    @ServerExceptionMapper(SQLGrammarException.class)
+    public Response handleSQLGrammar(SQLGrammarException ex) {
         return Response
-                .status(Response.Status.INTERNAL_SERVER_ERROR)
-                .entity(
-                        new ErrorMessage(
-                                Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(),
-                                "Se ha producido un error",
-                                ex.getMessage(),
-                                Arrays.toString(ex.getStackTrace())
-                        )
-                )
+                .status(Response.Status.FORBIDDEN)
+                .entity(new ErrorMessage(
+                        Response.Status.BAD_REQUEST.getStatusCode(),
+                        "Se ha producido un error en la base de datos.",
+                        ex.getMessage(),
+                        Arrays.toString(ex.getStackTrace())
+                ))
                 .build();
     }
+
+//    @ServerExceptionMapper(Exception.class)
+//    public Response handleGeneral(Exception ex) {
+//        return Response
+//                .status(Response.Status.INTERNAL_SERVER_ERROR)
+//                .entity(
+//                        new ErrorMessage(
+//                                Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(),
+//                                "Se ha producido un error",
+//                                ex.getMessage(),
+//                                Arrays.toString(ex.getStackTrace())
+//                        )
+//                )
+//                .build();
+//    }
 }

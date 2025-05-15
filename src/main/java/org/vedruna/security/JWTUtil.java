@@ -2,7 +2,6 @@ package org.vedruna.security;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Arrays;
 import io.smallrye.jwt.build.Jwt;
 import org.vedruna.model.User;
 
@@ -16,6 +15,7 @@ public class JWTUtil {
                 .groups("USER")
                 .issuedAt(now)
                 .expiresAt(now.plus(Duration.ofHours(6)))
+                .claim("employee_id", user.getEmployee().getId())
                 .sign();
     }
 }

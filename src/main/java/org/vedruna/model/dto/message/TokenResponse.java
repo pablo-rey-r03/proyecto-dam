@@ -1,4 +1,4 @@
-package org.vedruna.model.dto;
+package org.vedruna.model.dto.message;
 
 import lombok.*;
 

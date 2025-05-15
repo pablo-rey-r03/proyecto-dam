@@ -1,5 +1,6 @@
 package org.vedruna.repository;
 
+import java.util.List;
 import java.util.Optional;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -42,5 +43,41 @@ public class EmployeeRepository implements PanacheRepository<Employee> {
 
         persist(employee);
         return employee;
+    }
+
+    @Transactional
+    public Employee update(NewEmployeeDTO dto, Long id) {
+        Employee employee = findById(id);
+
+        if (dto.getEndDate() != null && dto.getStartDate().isAfter(dto.getEndDate())) throw new IllegalArgumentException("La fecha de inicio no puede ser posterior a la final.");
+
+        employee.setNif(dto.getNif());
+        employee.setName(dto.getName());
+        employee.setSurname(dto.getSurname());
+        employee.setActive(dto.getActive());
+        employee.setCountry(Country.valueOf(dto.getCountry()));
+        employee.setStart_date(dto.getStartDate());
+        employee.setEnd_date(dto.getEndDate());
+        employee.setJob(dto.getJob());
+        employee.setDepartment(dto.getDepartment());
+        employee.setAdditional_info(dto.getAdditionalInfo());
+
+        persist(employee);
+        return employee;
+    }
+
+    @Transactional
+    public Employee delete(Long id) {
+        if (findByIdOptional(id).isEmpty()) throw new NotFoundException("No se ha encontrado un empleado con id " + id + ".");
+
+        Employee employee = findById(id);
+        delete(employee);
+        return employee;
+    }
+
+    public List<Employee> getByCompany(Long id) {
+        if (companyRepo.findByIdOptional(id).isEmpty()) throw new NotFoundException("No se ha encontrado una empresa con id " + id + ".");
+
+        return find("company.id", id).list();
     }
 }
