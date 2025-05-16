@@ -41,7 +41,7 @@ public class CompanyRepository implements PanacheRepository<Company> {
 
     @Transactional
     public Company delete(Long id) {
-        Company company = findByIdOptional(id).orElseThrow(NotFoundException::new);
+        Company company = findByIdOptional(id).orElseThrow(() -> new NotFoundException("Empresa no encontrada."));
         delete(company);
         return company;
     }

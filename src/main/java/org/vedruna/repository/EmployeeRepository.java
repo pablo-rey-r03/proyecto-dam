@@ -38,7 +38,7 @@ public class EmployeeRepository implements PanacheRepository<Employee> {
                 dto.getJob(),
                 dto.getDepartment(),
                 dto.getAdditionalInfo(),
-                companyRepo.findByIdOptional(dto.getCompanyId()).orElseThrow(NotFoundException::new)
+                companyRepo.findByIdOptional(dto.getCompanyId()).orElseThrow(() -> new NotFoundException("Empresa no encontrada."))
         );
 
         persist(employee);

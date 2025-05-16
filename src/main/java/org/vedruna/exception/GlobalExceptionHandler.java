@@ -1,6 +1,7 @@
 package org.vedruna.exception;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.Response;
 import org.hibernate.PropertyValueException;
@@ -73,6 +74,14 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
             error = new ErrorMessage(
                     Response.Status.BAD_REQUEST.getStatusCode(),
                     "Se ha producido un error de SQL en la base de datos.",
+                    ex.getMessage(),
+                    Arrays.toString(ex.getStackTrace())
+            );
+        } else if (ex instanceof BadRequestException) {
+            status = Response.Status.BAD_REQUEST;
+            error = new ErrorMessage(
+                    Response.Status.BAD_REQUEST.getStatusCode(),
+                    "La solicitud no presenta el formato requerido.",
                     ex.getMessage(),
                     Arrays.toString(ex.getStackTrace())
             );

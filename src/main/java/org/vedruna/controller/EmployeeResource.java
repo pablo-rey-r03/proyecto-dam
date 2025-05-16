@@ -32,7 +32,7 @@ public class EmployeeResource {
     @Path("{id}")
     @Authenticated
     public Response getOne(@NotNull @PathParam("id") Long id) {
-        return Response.ok(employeeRepo.findByIdOptional(id).orElseThrow(NotFoundException::new)).build();
+        return Response.ok(employeeRepo.findByIdOptional(id).orElseThrow(() -> new NotFoundException("Empleado no encontrado."))).build();
     }
 
     @GET

@@ -47,15 +47,15 @@ public class AuthService {
                 registerDTO.getDepartment(),
                 null,
                 companyRepository.findByIdOptional(registerDTO.getCompany_id())
-                        .orElseThrow(NotFoundException::new)
+                        .orElseThrow(() -> new NotFoundException("Empresa no encontrada."))
         );
 
         employeeRepository.persist(employee);
 
-        Employee persisted = employeeRepository.findByNif(employee.getNif()).orElseThrow(NotFoundException::new);
+        Employee persisted = employeeRepository.findByNif(employee.getNif()).orElseThrow(() -> new NotFoundException("Empleado no encontrado."));
 
         User user = new User(
-                employeeRepository.findByIdOptional(persisted.getId()).orElseThrow(NotFoundException::new),
+                employeeRepository.findByIdOptional(persisted.getId()).orElseThrow(() -> new NotFoundException("Empleado no encontrado.")),
                 hashPassword(registerDTO.getPassword()),
                 registerDTO.getEmail()
         );

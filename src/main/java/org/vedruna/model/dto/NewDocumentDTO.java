@@ -21,5 +21,4 @@ public class NewDocumentDTO {
     private LocalDate validationDate;
     private Long employeeId;
     private String additionalInfo;
-    private String filePath;
 }
