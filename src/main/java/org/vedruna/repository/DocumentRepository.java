@@ -43,7 +43,7 @@ public class DocumentRepository implements PanacheRepository<Document> {
                 dto.getDate(),
                 dto.getExpirationDate(),
                 dto.getValidationDate(),
-                employeeRepo.findByIdOptional(dto.getEmployeeId()).orElseThrow(() -> new NotFoundException("Empleado no encontrado.")),
+                dto.getEmployeeId() == null ? null : employeeRepo.findByIdOptional(dto.getEmployeeId()).orElseThrow(() -> new NotFoundException("Empleado no encontrado.")),
                 dto.getAdditionalInfo(),
                 null
         );

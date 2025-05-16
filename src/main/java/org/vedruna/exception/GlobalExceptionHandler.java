@@ -4,15 +4,18 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.ext.Provider;
 import org.hibernate.PropertyValueException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.DataException;
+import org.hibernate.exception.GenericJDBCException;
 import org.hibernate.exception.SQLGrammarException;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import org.vedruna.model.dto.message.ErrorMessage;
 
 import java.util.Arrays;
 
+@Provider
 @ApplicationScoped
 public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
 
@@ -85,7 +88,16 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
                     ex.getMessage(),
                     Arrays.toString(ex.getStackTrace())
             );
+        } else if (ex instanceof GenericJDBCException) {
+            status = Response.Status.BAD_REQUEST;
+            error = new ErrorMessage(
+                    Response.Status.BAD_REQUEST.getStatusCode(),
+                    "Un evento de la base de datos ha impedido la ejecución del comando.",
+                    ex.getMessage(),
+                    Arrays.toString(ex.getStackTrace())
+            );
         } else {
+            ex.printStackTrace();
             error = new ErrorMessage(
                     Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(),
                     "Se ha producido un error.",
