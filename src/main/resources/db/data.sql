@@ -30,9 +30,9 @@ VALUES
 (2, 1, '2024-02-01', '2025-02-01', 'Subcontratación para campañas de marketing');
 
 
-INSERT INTO document (validation_state, contractor_id, subcontract_id, addressee_type, name, date, expiration_date, validation_date, employee_id, additional_info, file_path)
+INSERT INTO document (validation_state, contractor_id, subcontract_id, name, date, expiration_date, validation_date, employee_id, additional_info, file_path)
 VALUES 
-('VA', 1, 2, 'COM', 'Contrato de subcontratación', '2025-01-01', '2026-01-01', NULL, NULL, 'Documento relacionado con la subcontratación de servicios tecnológicos', '/path/to/document1.pdf'),
-('VA', 2, 1, 'EMP', 'Contrato de marketing', '2025-02-01', '2026-02-01', NULL, 2, 'Documento para empleado relacionado con la campaña de marketing', '/path/to/document2.pdf');
+('VA', 1, 2, 'Contrato de subcontratación', '2025-01-01', '2026-01-01', NULL, NULL, 'Documento relacionado con la subcontratación de servicios tecnológicos', '/path/to/document1.pdf'),
+('VA', 2, 1, 'Contrato de marketing', '2025-02-01', '2026-02-01', NULL, 1, 'Documento para empleado relacionado con la campaña de marketing', '/path/to/document2.pdf');
 
 COMMIT;

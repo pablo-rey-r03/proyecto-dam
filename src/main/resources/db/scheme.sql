@@ -77,7 +77,7 @@ CREATE TABLE employee (
 	department VARCHAR(64) NOT NULL,
 	additional_info VARCHAR(512),
 	company_id INTEGER NOT NULL,
-	FOREIGN KEY (company_id) REFERENCES company(id)
+	FOREIGN KEY (company_id) REFERENCES company(id) ON DELETE CASCADE
 );
 
 
@@ -90,7 +90,7 @@ CREATE TABLE users (
 	email VARCHAR(64) NOT NULL UNIQUE,
 	password VARCHAR(256) NOT NULL,
 	employee_id INTEGER NOT NULL,
-	FOREIGN KEY (employee_id) REFERENCES employee(id)
+	FOREIGN KEY (employee_id) REFERENCES employee(id) ON DELETE CASCADE
 );
 
 
@@ -120,7 +120,6 @@ CREATE TABLE document (
 	validation_state ENUM ('OK', 'ER', 'VA', 'EX') NOT NULL,
 	contractor_id INTEGER NOT NULL,
 	subcontract_id INTEGER NOT NULL,
-	addressee_type ENUM('EMP', 'COM') NOT NULL,
 	name VARCHAR(128) NOT NULL,
 	date DATE NOT NULL,
 	expiration_date DATE,
@@ -128,9 +127,9 @@ CREATE TABLE document (
 	employee_id INTEGER,
 	additional_info VARCHAR(256),
 	file_path VARCHAR(512),
-	FOREIGN KEY (contractor_id) REFERENCES company(id),
-	FOREIGN KEY (subcontract_id) REFERENCES company(id),
-	FOREIGN KEY (employee_id) REFERENCES employee(id)
+	FOREIGN KEY (contractor_id) REFERENCES company(id) ON DELETE CASCADE,
+	FOREIGN KEY (subcontract_id) REFERENCES company(id) ON DELETE CASCADE,
+	FOREIGN KEY (employee_id) REFERENCES employee(id) ON DELETE CASCADE
 );
 
 /**
@@ -145,7 +144,7 @@ STARTS CURRENT_TIMESTAMP
 DO
 	UPDATE document 
 	SET validation_state = 'EX'
-	WHERE expiration_date <= CURDATE() AND validation_state != 'EX';
+	WHERE expiration_date <= CURDATE() AND validation_state != 'EX' AND expiration_date IS NOT NULL;
 
 /**
  * TRIGGER - Document
@@ -164,12 +163,6 @@ CREATE TRIGGER validate_document_insert
 BEFORE INSERT ON document
 FOR EACH ROW
 BEGIN
-    -- Comprobar que la fecha de validación es nula
-    IF NEW.validation_date IS NOT NULL THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'La fecha de validación no debe estar definida en la inserción.';
-    END IF;
-
     -- Comprobar que la fecha de expiración, si se especifica, es posterior a la fecha actual
     IF NEW.expiration_date IS NOT NULL AND NEW.expiration_date <= CURDATE() THEN
         SIGNAL SQLSTATE '45000'
@@ -180,18 +173,6 @@ BEGIN
     IF NEW.validation_state != 'VA' THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'El documento debe insertarse pendiente de validación.';
-    END IF;
-
-    -- Comprobar que si el tipo de destinatario es 'EMP' el ID del empleado NO es nulo
-    IF NEW.addressee_type = 'EMP' AND NEW.employee_id IS NULL THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Si el documento está destinado a empleados, el ID de empleado no puede ser nulo.';
-    END IF;
-
-    -- Comprobar que si el tipo de destinatario es 'COM' el ID de empleado debe ser nulo
-    IF NEW.addressee_type = 'COM' AND NEW.employee_id IS NOT NULL THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Si el documento está destinado a empresas, no debe especificarse ningún ID de empleado.';
     END IF;
     
 END$$
@@ -216,16 +197,6 @@ CREATE TRIGGER validate_document_update
 BEFORE UPDATE ON document
 FOR EACH ROW
 BEGIN
-	IF NEW.addressee_type = 'EMP' AND NEW.employee_id IS NULL THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Si el documento está destinado a empleados, el ID de empleado no puede ser nulo.';
-    END IF;
-
-    IF NEW.addressee_type = 'COM' AND NEW.employee_id IS NOT NULL THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Si el documento está destinado a empresas, no debe especificarse ningún ID de empleado.';
-    END IF;
-
 	IF NEW.date != OLD.date THEN
 		SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'La fecha de emisión del documento no puede ser modificada.';

@@ -83,7 +83,7 @@ public class SubcontractingRelationshipRepository implements PanacheRepository<S
 
             if (srDTO.getStartDate() != null) sr.setStart_date(srDTO.getStartDate());
             if (srDTO.getEndDate() != null) sr.setEnd_date(srDTO.getEndDate());
-            if (srDTO.getAdditionalInfo() != null && !srDTO.getAdditionalInfo().isBlank()) sr.setAdditional_info(srDTO.getAdditionalInfo());
+            if (srDTO.getAdditionalInfo() != null) sr.setAdditional_info(srDTO.getAdditionalInfo());
 
             if (sr.getEnd_date() != null && sr.getStart_date().isAfter(sr.getEnd_date())) throw new IllegalArgumentException("La fecha de inicio no puede ser posterior a la final.");
             if (Objects.equals(contractorId, subcontractId)) throw new IllegalArgumentException("Las empresas deben ser distintas.");

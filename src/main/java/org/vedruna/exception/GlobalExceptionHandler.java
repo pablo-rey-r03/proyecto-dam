@@ -1,8 +1,10 @@
 package org.vedruna.exception;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.RollbackException;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.NotSupportedException;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.Provider;
 import org.hibernate.PropertyValueException;
@@ -13,6 +15,8 @@ import org.hibernate.exception.SQLGrammarException;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import org.vedruna.model.dto.message.ErrorMessage;
 
+import java.io.IOException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Arrays;
 
 @Provider
@@ -23,6 +27,10 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
     public Response toResponse(Throwable ex) {
         ErrorMessage error;
         Response.Status status = Response.Status.INTERNAL_SERVER_ERROR;
+
+        while (ex.getCause() != null) {
+            ex = ex.getCause();
+        }
 
         if (ex instanceof NotFoundException) {
             status = Response.Status.NOT_FOUND;
@@ -37,6 +45,22 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
             error = new ErrorMessage(
                     Response.Status.BAD_REQUEST.getStatusCode(),
                     "El argumento proporcionado no es válido.",
+                    ex.getMessage(),
+                    Arrays.toString(ex.getStackTrace())
+            );
+        } else if (ex instanceof SQLIntegrityConstraintViolationException) {
+            status = Response.Status.FORBIDDEN;
+            error = new ErrorMessage(
+                    Response.Status.FORBIDDEN.getStatusCode(),
+                    "Se ha violado una restricción del modelo de la base de datos.",
+                    ex.getMessage(),
+                    Arrays.toString(ex.getStackTrace())
+            );
+        } else if (ex instanceof RollbackException) {
+            status = Response.Status.FORBIDDEN;
+            error = new ErrorMessage(
+                    Response.Status.FORBIDDEN.getStatusCode(),
+                    "Se ha cancelado la operación por violar las restricciones.",
                     ex.getMessage(),
                     Arrays.toString(ex.getStackTrace())
             );
@@ -93,6 +117,20 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
             error = new ErrorMessage(
                     Response.Status.BAD_REQUEST.getStatusCode(),
                     "Un evento de la base de datos ha impedido la ejecución del comando.",
+                    ex.getMessage(),
+                    Arrays.toString(ex.getStackTrace())
+            );
+        } else if (ex instanceof IOException) {
+            error = new ErrorMessage(
+                    Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(),
+                    "Error en el procesado de flujos de archivos.",
+                    ex.getMessage(),
+                    Arrays.toString(ex.getStackTrace())
+            );
+        } else if (ex instanceof NotSupportedException) {
+            error = new ErrorMessage(
+                    Response.Status.UNSUPPORTED_MEDIA_TYPE.getStatusCode(),
+                    "Formato de archivo multimedia no soportado.",
                     ex.getMessage(),
                     Arrays.toString(ex.getStackTrace())
             );

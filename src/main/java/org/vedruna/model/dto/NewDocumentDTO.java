@@ -14,7 +14,6 @@ public class NewDocumentDTO {
     private String validationState;
     private Long contractorId;
     private Long subcontractId;
-    private String addresseeType;
     private String name;
     private LocalDate date;
     private LocalDate expirationDate;

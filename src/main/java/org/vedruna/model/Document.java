@@ -15,7 +15,6 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.vedruna.model.enums.AddresseeType;
 import org.vedruna.model.enums.ValidationState;
 
 @Entity
@@ -42,10 +41,6 @@ public class Document {
     @JoinColumn(name = "subcontract_id", nullable = false)
     private Company subcontract;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private AddresseeType addressee_type;
-
     @Column(nullable = false, length = 128)
     private String name;
 
@@ -68,12 +63,11 @@ public class Document {
     @Column(length = 512)
     private String file_path;
 
-    public Document(ValidationState validation_state, Company contractor, Company subcontract, AddresseeType addressee_type, String name, LocalDate date,
+    public Document(ValidationState validation_state, Company contractor, Company subcontract, String name, LocalDate date,
             LocalDate expiration_date, LocalDate validation_date, Employee employee, String additional_info, String file_path) {
         this.validation_state = validation_state;
         this.contractor = contractor;
         this.subcontract = subcontract;
-        this.addressee_type = addressee_type;
         this.name = name;
         this.date = date;
         this.expiration_date = expiration_date;
