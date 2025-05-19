@@ -35,7 +35,6 @@ public class CompanyResource {
     }
 
     @GET
-    @Authenticated
     public Response getAll() {
         return Response.ok(companyRepository.listAll()).build();
     }

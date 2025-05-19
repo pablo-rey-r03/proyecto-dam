@@ -1,5 +1,6 @@
 package org.vedruna.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -25,6 +26,8 @@ public class EmployeeRepository implements PanacheRepository<Employee> {
     public Employee create(NewEmployeeDTO dto) {
         if (findByNif(dto.getNif()).isPresent()) throw new IllegalArgumentException("Ya existe un empleado con este NIF.");
 
+        if (dto.getStartDate().isAfter(LocalDate.now())) throw new IllegalArgumentException("La fecha de contratación no puede ser futura.");
+
         if (dto.getEndDate() != null && dto.getStartDate().isAfter(dto.getEndDate())) throw new IllegalArgumentException("La fecha de inicio no puede ser posterior a la final.");
 
         Employee employee = new Employee(
@@ -48,6 +51,8 @@ public class EmployeeRepository implements PanacheRepository<Employee> {
     @Transactional
     public Employee update(NewEmployeeDTO dto, Long id) {
         Employee employee = findById(id);
+
+        if (dto.getStartDate().isAfter(LocalDate.now())) throw new IllegalArgumentException("La fecha de contratación no puede ser futura.");
 
         if (dto.getEndDate() != null && dto.getStartDate().isAfter(dto.getEndDate())) throw new IllegalArgumentException("La fecha de inicio no puede ser posterior a la final.");
 

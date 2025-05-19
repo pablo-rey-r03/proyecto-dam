@@ -1,5 +1,6 @@
 package org.vedruna.exception;
 
+import com.mysql.cj.jdbc.exceptions.MysqlDataTruncation;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.RollbackException;
 import jakarta.ws.rs.BadRequestException;
@@ -130,6 +131,7 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
                     Arrays.toString(ex.getStackTrace())
             );
         } else if (ex instanceof NotSupportedException) {
+            status = Response.Status.UNSUPPORTED_MEDIA_TYPE;
             error = new ErrorMessage(
                     Response.Status.UNSUPPORTED_MEDIA_TYPE.getStatusCode(),
                     "Formato de archivo multimedia no soportado.",
@@ -137,6 +139,7 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
                     Arrays.toString(ex.getStackTrace())
             );
         } else if (ex instanceof UnauthorizedException) {
+            status = Response.Status.UNAUTHORIZED;
             error = new ErrorMessage(
                     Response.Status.UNAUTHORIZED.getStatusCode(),
                     "Acceso no autorizado.",
@@ -144,9 +147,18 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
                     Arrays.toString(ex.getStackTrace())
             );
         } else if (ex instanceof NotAllowedException) {
+            status = Response.Status.METHOD_NOT_ALLOWED;
             error = new ErrorMessage(
                     Response.Status.METHOD_NOT_ALLOWED.getStatusCode(),
                     "Método HTTP no permitido.",
+                    ex.getMessage(),
+                    Arrays.toString(ex.getStackTrace())
+            );
+        } else if (ex instanceof MysqlDataTruncation) {
+            status = Response.Status.REQUEST_ENTITY_TOO_LARGE;
+            error = new ErrorMessage(
+                    Response.Status.REQUEST_ENTITY_TOO_LARGE.getStatusCode(),
+                    "Hay campos del formulario demasiado largos.",
                     ex.getMessage(),
                     Arrays.toString(ex.getStackTrace())
             );

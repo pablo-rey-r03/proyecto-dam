@@ -1,5 +1,6 @@
 package org.vedruna.security.auth;
 
+import java.time.LocalDate;
 import java.util.Optional;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -34,6 +35,8 @@ public class AuthService {
 
         if (employeeRepository.find("nif", registerDTO.getNif()).firstResult() != null)
             throw new IllegalArgumentException("Este NIF ya está registrado.");
+
+        if (registerDTO.getStart_date().isAfter(LocalDate.now())) throw new IllegalArgumentException("La fecha de contratación no puede ser futura.");
 
         Employee employee = new Employee(
                 registerDTO.getNif(),
