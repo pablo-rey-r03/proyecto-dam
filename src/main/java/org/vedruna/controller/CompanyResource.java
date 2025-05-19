@@ -31,11 +31,7 @@ public class CompanyResource {
     @Path("{id}")
     @Authenticated
     public Response getById(@PathParam("id") Long id) {
-        if (companyRepository.getCompanyById(id).isPresent()) {
-            return Response.ok(companyRepository.getCompanyById(id).get()).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).entity(new ResponseDTO("Empresa no encontrada.")).build();
-        }
+        return Response.ok(companyRepository.getCompanyById(id).orElseThrow(() -> new NotFoundException("Empresa no encontrada."))).build();
     }
 
     @GET
@@ -92,7 +88,7 @@ public class CompanyResource {
     public Response getSubontracts(@NotNull @PathParam("id") Long id) {
         List<SubcontractingRelationship> subcontracts = subRepo.findByContractorId(id);
         if (subcontracts.isEmpty()) {
-            return Response.status(Response.Status.NOT_FOUND).entity(new ResponseDTO("No hay subcontratas para la empresa dada.")).build();
+            return Response.status(Response.Status.NO_CONTENT).entity(new ResponseDTO("No hay subcontratas para la empresa dada.")).build();
         }
         return Response.ok(subcontracts).build();
     }
@@ -103,7 +99,7 @@ public class CompanyResource {
     public Response getContracts(@NotNull @PathParam("id") Long id) {
         List<SubcontractingRelationship> contracts = subRepo.findBySubcontractId(id);
         if (contracts.isEmpty()) {
-            return Response.status(Response.Status.NOT_FOUND).entity(new ResponseDTO("No hay contratistas para la empresa subcontratada.")).build();
+            return Response.status(Response.Status.NO_CONTENT).entity(new ResponseDTO("No hay contratistas para la empresa subcontratada.")).build();
         }
         return Response.ok(contracts).build();
     }

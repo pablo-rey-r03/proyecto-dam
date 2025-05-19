@@ -18,6 +18,7 @@ import org.vedruna.model.dto.message.ErrorMessage;
 import java.io.IOException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Arrays;
+import io.quarkus.security.UnauthorizedException;
 
 @Provider
 @ApplicationScoped
@@ -123,7 +124,7 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
         } else if (ex instanceof IOException) {
             error = new ErrorMessage(
                     Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(),
-                    "Error en el procesado de flujos de archivos.",
+                    "Error en el flujo de datos.",
                     ex.getMessage(),
                     Arrays.toString(ex.getStackTrace())
             );
@@ -134,11 +135,18 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
                     ex.getMessage(),
                     Arrays.toString(ex.getStackTrace())
             );
+        } else if (ex instanceof UnauthorizedException) {
+            error = new ErrorMessage(
+                    Response.Status.UNAUTHORIZED.getStatusCode(),
+                    "Acceso no autorizado.",
+                    ex.getMessage(),
+                    Arrays.toString(ex.getStackTrace())
+            );
         } else {
             ex.printStackTrace();
             error = new ErrorMessage(
                     Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(),
-                    "Se ha producido un error.",
+                    "Se ha producido un error en el servidor.",
                     ex.getMessage(),
                     Arrays.toString(ex.getStackTrace())
             );

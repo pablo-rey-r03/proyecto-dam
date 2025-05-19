@@ -14,9 +14,9 @@ import org.vedruna.model.User;
 import org.vedruna.model.dto.LoginDTO;
 import org.vedruna.model.dto.RegisterDTO;
 import org.vedruna.model.dto.message.TokenResponse;
-import org.vedruna.model.dto.message.ResponseDTO;
 import org.vedruna.model.dto.message.ResponseEntityDTO;
 import org.vedruna.security.JWTUtil;
+import io.quarkus.security.UnauthorizedException;
 
 @Path("/auth")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -44,6 +44,6 @@ public class AuthResource {
             return Response.ok(new TokenResponse(token)).build();
         }
 
-        return Response.status(Response.Status.UNAUTHORIZED).entity(new ResponseDTO("Las credenciales son incorrectas.")).build();
+        throw new UnauthorizedException("Las credenciales son incorrectas.");
     }
 }
