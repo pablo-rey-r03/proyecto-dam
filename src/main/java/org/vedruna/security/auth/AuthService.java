@@ -30,10 +30,10 @@ public class AuthService {
     public Employee register(RegisterDTO registerDTO) {
 
         if (userRepository.find("email", registerDTO.getEmail()).firstResult() != null)
-            throw new IllegalArgumentException("El email debe ser único.");
+            throw new IllegalArgumentException("Este email ya está registrado.");
 
         if (employeeRepository.find("nif", registerDTO.getNif()).firstResult() != null)
-            throw new IllegalArgumentException("El NIF debe ser único.");
+            throw new IllegalArgumentException("Este NIF ya está registrado.");
 
         Employee employee = new Employee(
                 registerDTO.getNif(),

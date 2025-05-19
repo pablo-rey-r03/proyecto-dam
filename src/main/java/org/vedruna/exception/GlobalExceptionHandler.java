@@ -3,6 +3,7 @@ package org.vedruna.exception;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.RollbackException;
 import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.NotAllowedException;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.NotSupportedException;
 import jakarta.ws.rs.core.Response;
@@ -139,6 +140,13 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
             error = new ErrorMessage(
                     Response.Status.UNAUTHORIZED.getStatusCode(),
                     "Acceso no autorizado.",
+                    ex.getMessage(),
+                    Arrays.toString(ex.getStackTrace())
+            );
+        } else if (ex instanceof NotAllowedException) {
+            error = new ErrorMessage(
+                    Response.Status.METHOD_NOT_ALLOWED.getStatusCode(),
+                    "Método HTTP no permitido.",
                     ex.getMessage(),
                     Arrays.toString(ex.getStackTrace())
             );
