@@ -11,13 +11,6 @@ import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 @ApplicationScoped
 public class CompanyRepository implements PanacheRepository<Company> {
-    public Company findByName(String name) {
-        return find("name", name).firstResult();
-    }
-
-    public Company findByCif(String cif) {
-        return find("cif", cif).firstResult();
-    }
 
     public Optional<Company> getCompanyById(Long id) {
         return findByIdOptional(id);
@@ -49,7 +42,7 @@ public class CompanyRepository implements PanacheRepository<Company> {
     @Transactional
     public Company update(Long id, NewCompanyDTO companyDTO) {
         Optional<Company> opt = findByIdOptional(id);
-        if (opt.isEmpty()) throw new NotFoundException("No hay empresas con el id " + id + ".");
+        if (opt.isEmpty()) throw new NotFoundException("No hay empresas con el id " + id);
 
         Company company = opt.get();
         company.setName(companyDTO.getName());

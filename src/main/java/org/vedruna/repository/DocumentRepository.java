@@ -32,8 +32,8 @@ public class DocumentRepository implements PanacheRepository<Document> {
 
     @Transactional
     public Document create(NewDocumentDTO dto) {
-        if (dto.getExpirationDate() != null && dto.getDate().isAfter(dto.getExpirationDate())) throw new IllegalArgumentException("La fecha de emisión no puede ser posterior a su fecha de expiración.");
-        if (dto.getValidationDate() != null && dto.getDate().isAfter(dto.getValidationDate())) throw new IllegalArgumentException("La fecha de validación no puede ser posterior a su fecha de expiración.");
+        if (dto.getExpirationDate() != null && dto.getDate().isAfter(dto.getExpirationDate())) throw new IllegalArgumentException("La fecha de emisión no puede ser posterior a su fecha de expiración");
+        if (dto.getValidationDate() != null && dto.getDate().isAfter(dto.getValidationDate())) throw new IllegalArgumentException("La fecha de validación no puede ser posterior a su fecha de expiración");
 
         Document doc = new Document(
                 ValidationState.valueOf(dto.getValidationState()),
@@ -55,7 +55,7 @@ public class DocumentRepository implements PanacheRepository<Document> {
 
     @Transactional
     public Document addFile(Long id, InputPart part) {
-        if (part == null) throw new BadRequestException("No se ha adjuntado ningún fichero.");
+        if (part == null) throw new BadRequestException("No se ha adjuntado ningún fichero");
 
         String contentDisposition = part.getHeaders().getFirst("Content-Disposition");
         String originalName = contentDisposition.replaceAll(".*filename=\"([^\"]+)\".*", "$1");
@@ -93,12 +93,12 @@ public class DocumentRepository implements PanacheRepository<Document> {
     }
 
     public List<Document> getByEmp(Long id) {
-        if (employeeRepo.findByIdOptional(id).isEmpty()) throw new NotFoundException("Empleado no encontrado.");
+        if (employeeRepo.findByIdOptional(id).isEmpty()) throw new NotFoundException("Empleado no encontrado");
         return find("employee.id", id).list();
     }
 
     public List<Document> getBySub(Long id) {
-        if (companyRepo.findByIdOptional(id).isEmpty()) throw new NotFoundException("Empresa no encontrado.");
+        if (companyRepo.findByIdOptional(id).isEmpty()) throw new NotFoundException("Empresa no encontrado");
         return find("subcontract.id", id).list();
     }
 
@@ -119,14 +119,14 @@ public class DocumentRepository implements PanacheRepository<Document> {
     }
 
     public Response downloadFileFromDocument(Long id) {
-        Document doc = findByIdOptional(id).orElseThrow(() -> new NotFoundException("Documento no encontrado."));
+        Document doc = findByIdOptional(id).orElseThrow(() -> new NotFoundException("Documento no encontrado"));
 
         if (doc.getFile_path() == null) {
-            throw new NotFoundException("No hay archivos adjuntos al documento.");
+            throw new NotFoundException("No hay archivos adjuntos al documento");
         }
 
         Path path = Path.of(doc.getFile_path());
-        if (!Files.exists(path)) throw new NotFoundException("No se ha encontrado el archivo en el servidor.");
+        if (!Files.exists(path)) throw new NotFoundException("No se ha encontrado el archivo en el servidor");
 
         File file = path.toFile();
 

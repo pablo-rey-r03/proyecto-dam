@@ -29,14 +29,14 @@ public class AuthResource {
     @POST
     @Path("/register")
     public Response register(@NotNull RegisterDTO registerDTO) {
-        if (registerDTO == null) throw new IllegalArgumentException("Debe proporcionar la información del usuario para ser registrado.");
-        return Response.status(Response.Status.CREATED).entity(new ResponseEntityDTO<>("Se ha registrado correctamente como empleado.", authService.register(registerDTO))).build();
+        if (registerDTO == null) throw new IllegalArgumentException("Debe proporcionar la información del usuario para ser registrado");
+        return Response.status(Response.Status.CREATED).entity(new ResponseEntityDTO<>("Se ha registrado correctamente como empleado", authService.register(registerDTO))).build();
     }
 
     @POST
     @Path("/login")
     public Response login(@NotNull LoginDTO loginDTO) {
-        if (loginDTO == null) throw new IllegalArgumentException("Las credenciales son obligatorias.");
+        if (loginDTO == null) throw new IllegalArgumentException("Las credenciales son obligatorias");
 
         Optional<User> userOptional = authService.findByEmail(loginDTO.getEmail());
         if (userOptional.isPresent() && authService.verifyPassword(loginDTO.getPassword(), userOptional.get().getPassword())) {
@@ -44,6 +44,6 @@ public class AuthResource {
             return Response.ok(new TokenResponse(token)).build();
         }
 
-        throw new UnauthorizedException("Las credenciales son incorrectas.");
+        throw new UnauthorizedException("Las credenciales son incorrectas");
     }
 }

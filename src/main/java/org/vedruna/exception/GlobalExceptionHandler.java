@@ -39,7 +39,7 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
             status = Response.Status.NOT_FOUND;
             error = new ErrorMessage(
                     Response.Status.NOT_FOUND.getStatusCode(),
-                    "Recurso no encontrado.",
+                    "Recurso no encontrado",
                     ex.getMessage(),
                     Arrays.toString(ex.getStackTrace())
             );
@@ -47,7 +47,7 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
             status = Response.Status.BAD_REQUEST;
             error = new ErrorMessage(
                     Response.Status.BAD_REQUEST.getStatusCode(),
-                    "El argumento proporcionado no es válido.",
+                    "El argumento proporcionado no es válido",
                     ex.getMessage(),
                     Arrays.toString(ex.getStackTrace())
             );
@@ -55,7 +55,7 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
             status = Response.Status.FORBIDDEN;
             error = new ErrorMessage(
                     Response.Status.FORBIDDEN.getStatusCode(),
-                    "Se ha violado una restricción del modelo de la base de datos.",
+                    "Se ha violado una restricción del modelo de la base de datos",
                     ex.getMessage(),
                     Arrays.toString(ex.getStackTrace())
             );
@@ -63,7 +63,7 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
             status = Response.Status.FORBIDDEN;
             error = new ErrorMessage(
                     Response.Status.FORBIDDEN.getStatusCode(),
-                    "Se ha cancelado la operación por violar las restricciones.",
+                    "Se ha cancelado la operación por violar las restricciones",
                     ex.getMessage(),
                     Arrays.toString(ex.getStackTrace())
             );
@@ -71,7 +71,7 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
             status = Response.Status.BAD_REQUEST;
             error = new ErrorMessage(
                     Response.Status.BAD_REQUEST.getStatusCode(),
-                    "Los datos no son válidos para el esquema de la base de datos.",
+                    "Los datos no son válidos para el esquema de la base de datos",
                     ex.getMessage(),
                     Arrays.toString(ex.getStackTrace())
             );
@@ -79,7 +79,7 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
             status = Response.Status.BAD_REQUEST;
             error = new ErrorMessage(
                     Response.Status.BAD_REQUEST.getStatusCode(),
-                    "Error relacionado con el valor de una propiedad.",
+                    "Error relacionado con el valor de una propiedad",
                     ex.getMessage(),
                     Arrays.toString(ex.getStackTrace())
             );
@@ -87,7 +87,7 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
             status = Response.Status.FORBIDDEN;
             error = new ErrorMessage(
                     Response.Status.FORBIDDEN.getStatusCode(),
-                    "Se ha violado una restricción del modelo.",
+                    "Se ha violado una restricción del modelo",
                     ex.getMessage(),
                     Arrays.toString(ex.getStackTrace())
             );
@@ -95,7 +95,7 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
             status = Response.Status.NOT_FOUND;
             error = new ErrorMessage(
                     Response.Status.NOT_FOUND.getStatusCode(),
-                    "Se ha accedido a una entidad nula.",
+                    "Se ha accedido a una entidad nula",
                     ex.getMessage(),
                     Arrays.toString(ex.getStackTrace())
             );
@@ -103,7 +103,7 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
             status = Response.Status.BAD_REQUEST;
             error = new ErrorMessage(
                     Response.Status.BAD_REQUEST.getStatusCode(),
-                    "Se ha producido un error de SQL en la base de datos.",
+                    "Se ha producido un error de SQL en la base de datos",
                     ex.getMessage(),
                     Arrays.toString(ex.getStackTrace())
             );
@@ -111,7 +111,7 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
             status = Response.Status.BAD_REQUEST;
             error = new ErrorMessage(
                     Response.Status.BAD_REQUEST.getStatusCode(),
-                    "La solicitud no presenta el formato requerido.",
+                    "La solicitud no presenta el formato requerido",
                     ex.getMessage(),
                     Arrays.toString(ex.getStackTrace())
             );
@@ -119,14 +119,14 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
             status = Response.Status.BAD_REQUEST;
             error = new ErrorMessage(
                     Response.Status.BAD_REQUEST.getStatusCode(),
-                    "Un evento de la base de datos ha impedido la ejecución del comando.",
+                    "Un evento de la base de datos ha impedido la ejecución del comando",
                     ex.getMessage(),
                     Arrays.toString(ex.getStackTrace())
             );
         } else if (ex instanceof IOException) {
             error = new ErrorMessage(
                     Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(),
-                    "Error en el flujo de datos.",
+                    "Error en el flujo de datos",
                     ex.getMessage(),
                     Arrays.toString(ex.getStackTrace())
             );
@@ -134,7 +134,7 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
             status = Response.Status.UNSUPPORTED_MEDIA_TYPE;
             error = new ErrorMessage(
                     Response.Status.UNSUPPORTED_MEDIA_TYPE.getStatusCode(),
-                    "Formato de archivo multimedia no soportado.",
+                    "Formato de archivo multimedia no soportado",
                     ex.getMessage(),
                     Arrays.toString(ex.getStackTrace())
             );
@@ -142,7 +142,7 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
             status = Response.Status.UNAUTHORIZED;
             error = new ErrorMessage(
                     Response.Status.UNAUTHORIZED.getStatusCode(),
-                    "Acceso no autorizado.",
+                    "Acceso no autorizado",
                     ex.getMessage(),
                     Arrays.toString(ex.getStackTrace())
             );
@@ -150,7 +150,7 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
             status = Response.Status.METHOD_NOT_ALLOWED;
             error = new ErrorMessage(
                     Response.Status.METHOD_NOT_ALLOWED.getStatusCode(),
-                    "Método HTTP no permitido.",
+                    "Método HTTP no permitido",
                     ex.getMessage(),
                     Arrays.toString(ex.getStackTrace())
             );
@@ -158,7 +158,7 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
             status = Response.Status.REQUEST_ENTITY_TOO_LARGE;
             error = new ErrorMessage(
                     Response.Status.REQUEST_ENTITY_TOO_LARGE.getStatusCode(),
-                    "Hay campos del formulario demasiado largos.",
+                    "Hay campos del formulario demasiado largos",
                     ex.getMessage(),
                     Arrays.toString(ex.getStackTrace())
             );
@@ -166,7 +166,7 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
             ex.printStackTrace();
             error = new ErrorMessage(
                     Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(),
-                    "Se ha producido un error en el servidor.",
+                    "Se ha producido un error en el servidor",
                     ex.getMessage(),
                     Arrays.toString(ex.getStackTrace())
             );
