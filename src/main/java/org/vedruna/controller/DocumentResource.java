@@ -72,8 +72,8 @@ public class DocumentResource {
 
         if (docs.isEmpty()) {
             return Response
-                    .noContent()
-                    .build();
+                .noContent()
+                .build();
         }
 
         return Response
