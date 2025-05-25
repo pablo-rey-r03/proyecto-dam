@@ -14,7 +14,7 @@ public class JWTUtil {
                 .upn(user.getEmail())
                 .groups("USER")
                 .issuedAt(now)
-                .expiresAt(now.plus(Duration.ofHours(6)))
+                .expiresAt(now.plus(Duration.ofHours(8)))
                 .claim("employee_id", user.getEmployee().getId())
                 .sign();
     }

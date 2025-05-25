@@ -18,6 +18,7 @@ import jakarta.ws.rs.ext.ExceptionMapper;
 import org.vedruna.model.dto.message.ErrorMessage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Arrays;
 import io.quarkus.security.UnauthorizedException;
@@ -159,6 +160,14 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
             error = new ErrorMessage(
                     Response.Status.REQUEST_ENTITY_TOO_LARGE.getStatusCode(),
                     "Hay campos del formulario demasiado largos",
+                    ex.getMessage(),
+                    Arrays.toString(ex.getStackTrace())
+            );
+        } else if (ex instanceof SQLException) {
+            status = Response.Status.BAD_REQUEST;
+            error = new ErrorMessage(
+                    Response.Status.BAD_REQUEST.getStatusCode(),
+                    "Se ha lanzado un error desde la base de datos",
                     ex.getMessage(),
                     Arrays.toString(ex.getStackTrace())
             );
