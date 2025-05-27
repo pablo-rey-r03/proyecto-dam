@@ -1,5 +1,5 @@
 # proyecto-dam
-Proyecto integrado para DAM.
+_Backend_ de mi proyecto integrado para DAM.
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
