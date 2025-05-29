@@ -31,7 +31,7 @@ public class CompanyResource {
     @Path("{id}")
     @Authenticated
     public Response getById(@PathParam("id") Long id) {
-        return Response.ok(companyRepository.getCompanyById(id).orElseThrow(() -> new NotFoundException("Empresa no encontrada."))).build();
+        return Response.ok(companyRepository.getCompanyById(id).orElseThrow(() -> new NotFoundException("Empresa no encontrada"))).build();
     }
 
     @GET
@@ -46,7 +46,7 @@ public class CompanyResource {
                 .status(Response.Status.CREATED)
                 .entity(
                         new ResponseEntityDTO<>(
-                                "Empresa creada correctamente.",
+                                "Empresa creada correctamente",
                                 companyRepository.create(newCompanyDTO)
                         )
                 )
@@ -61,7 +61,7 @@ public class CompanyResource {
                 .status(Response.Status.NO_CONTENT)
                 .entity(
                         new ResponseEntityDTO<>(
-                                "Empresa eliminada correctamente.",
+                                "Empresa eliminada correctamente",
                                 companyRepository.delete(id)
                         )
                 )
@@ -87,7 +87,7 @@ public class CompanyResource {
     public Response getSubontracts(@NotNull @PathParam("id") Long id) {
         List<SubcontractingRelationship> subcontracts = subRepo.findByContractorId(id);
         if (subcontracts.isEmpty()) {
-            return Response.status(Response.Status.NO_CONTENT).entity(new ResponseDTO("No hay subcontratas para la empresa dada.")).build();
+            return Response.status(Response.Status.NO_CONTENT).entity(new ResponseDTO("No hay subcontratas para la empresa dada")).build();
         }
         return Response.ok(subcontracts).build();
     }
@@ -98,7 +98,7 @@ public class CompanyResource {
     public Response getContracts(@NotNull @PathParam("id") Long id) {
         List<SubcontractingRelationship> contracts = subRepo.findBySubcontractId(id);
         if (contracts.isEmpty()) {
-            return Response.status(Response.Status.NO_CONTENT).entity(new ResponseDTO("No hay contratistas para la empresa subcontratada.")).build();
+            return Response.status(Response.Status.NO_CONTENT).entity(new ResponseDTO("No hay contratistas para la empresa subcontratada")).build();
         }
         return Response.ok(contracts).build();
     }
@@ -126,7 +126,7 @@ public class CompanyResource {
         return Response
                 .status(Response.Status.CREATED)
                 .entity(new ResponseEntityDTO<>(
-                        "Se ha creado la relación entre empresas correctamente.",
+                        "Se ha creado la relación entre empresas correctamente",
                         subRepo.create(contractorId, subcontractId, srDTO)
                 ))
                 .build();
@@ -143,7 +143,7 @@ public class CompanyResource {
         return Response
                 .status(Response.Status.CREATED)
                 .entity(new ResponseEntityDTO<>(
-                        "Se ha actualizado la relación entre empresas correctamente.",
+                        "Se ha actualizado la relación entre empresas correctamente",
                         subRepo.update(contractorId, subcontractId, srDTO)
                 ))
                 .build();
@@ -159,7 +159,7 @@ public class CompanyResource {
         return Response
                 .status(Response.Status.NO_CONTENT)
                 .entity(new ResponseEntityDTO<>(
-                        "Se ha eliminado la relación entre empresas correctamente.",
+                        "Se ha eliminado la relación entre empresas correctamente",
                         subRepo.delete(contractorId, subcontractId)
                 ))
                 .build();

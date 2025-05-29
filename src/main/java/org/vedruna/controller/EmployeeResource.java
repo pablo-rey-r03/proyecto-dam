@@ -32,7 +32,7 @@ public class EmployeeResource {
     @Path("{id}")
     @Authenticated
     public Response getOne(@NotNull @PathParam("id") Long id) {
-        return Response.ok(employeeRepo.findByIdOptional(id).orElseThrow(() -> new NotFoundException("Empleado no encontrado."))).build();
+        return Response.ok(employeeRepo.findByIdOptional(id).orElseThrow(() -> new NotFoundException("Empleado no encontrado"))).build();
     }
 
     @GET
@@ -44,7 +44,7 @@ public class EmployeeResource {
         if (employees.isEmpty()) return Response
                 .status(Response.Status.NO_CONTENT)
                 .entity(new ResponseDTO(
-                        "No hay empleados en dicha empresa."
+                        "No hay empleados en dicha empresa"
                 ))
                 .build();
 

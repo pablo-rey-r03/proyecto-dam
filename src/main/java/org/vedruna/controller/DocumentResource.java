@@ -33,7 +33,7 @@ public class DocumentResource {
     @Path("{id}")
     @Authenticated
     public Response getOne(@NotNull @PathParam("id") Long id) {
-        return Response.ok(docuRepo.findByIdOptional(id).orElseThrow(() -> new NotFoundException("Documento no encontrado."))).build();
+        return Response.ok(docuRepo.findByIdOptional(id).orElseThrow(() -> new NotFoundException("Documento no encontrado"))).build();
     }
 
     @POST
