@@ -1,7 +1,7 @@
 #
 # 1) Etapa de build usando Maven (JDK 17)
 #
-FROM maven:3.8.8-openjdk-17 AS build
+FROM maven:3.8-jdk-17-slim AS build
 WORKDIR /app
 
 # Copiamos pom.xml y descargamos dependencias (capa cacheable)
