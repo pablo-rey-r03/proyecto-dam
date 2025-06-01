@@ -19,10 +19,12 @@ FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 
 # Copiamos el JAR “runner” generado por Quarkus
-COPY --from=build /app/target/*-runner.jar app.jar
+COPY --from=build /app/target/quarkus-app/quarkus-run.jar app.jar
+COPY --from=build /app/target/quarkus-app/lib ./lib
+
 
 # Exponemos el puerto que usa Quarkus (por defecto 8080)
 EXPOSE 8080
 
 # Comando para arrancar la app en modo JVM
-CMD ["java", "-jar", "app.jar"]
+CMD ["java", "-cp", "app.jar:lib/*", "io.quarkus.runner.GeneratedMain"]
