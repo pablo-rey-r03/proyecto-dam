@@ -45,10 +45,10 @@ public class CompanyRepository implements PanacheRepository<Company> {
         if (opt.isEmpty()) throw new NotFoundException("No hay empresas con el id " + id);
 
         Company company = opt.get();
-        company.setName(companyDTO.getName());
-        company.setCif(companyDTO.getCif());
-        company.setAddress(companyDTO.getAddress());
-        company.setCountry(Country.valueOf(companyDTO.getCountry()));
+        if (companyDTO.getName() != null) company.setName(companyDTO.getName());
+        if (companyDTO.getCif() != null) company.setCif(companyDTO.getCif());
+        if (companyDTO.getAddress() != null) company.setAddress(companyDTO.getAddress());
+        if (companyDTO.getCountry() != null) company.setCountry(Country.valueOf(companyDTO.getCountry()));
 
         persist(company);
 

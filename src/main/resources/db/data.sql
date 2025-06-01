@@ -1,4 +1,4 @@
-USE proyecto;
+USE sql7782531;
 
 START TRANSACTION;
 	DELETE FROM document;
@@ -26,13 +26,8 @@ VALUES
 
 INSERT INTO subcontracting_relationship (contractor_id, subcontract_id, start_date, end_date, additional_info)
 VALUES 
-(1, 2, '2024-01-01', '2025-01-01', 'Subcontratación de servicios tecnológicos'),
-(2, 1, '2024-02-01', '2025-02-01', 'Subcontratación para campañas de marketing');
+(1, 2, '2024-01-01', '2027-01-01', 'Subcontratación de servicios tecnológicos'),
+(2, 3, '2024-02-01', '2027-02-01', 'Subcontratación para campañas de marketing');
 
-
-INSERT INTO document (validation_state, contractor_id, subcontract_id, name, date, expiration_date, validation_date, employee_id, additional_info, file_path)
-VALUES 
-('VA', 1, 2, 'Contrato de subcontratación', '2025-01-01', '2026-01-01', NULL, NULL, 'Documento relacionado con la subcontratación de servicios tecnológicos', '/path/to/document1.pdf'),
-('VA', 2, 1, 'Contrato de marketing', '2025-02-01', '2026-02-01', NULL, 1, 'Documento para empleado relacionado con la campaña de marketing', '/path/to/document2.pdf');
 
 COMMIT;

@@ -1,14 +1,17 @@
-DROP DATABASE IF EXISTS proyecto;
-CREATE DATABASE proyecto;
+USE sql7782531;
 
-USE proyecto;
+DROP TABLE IF EXISTS document;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS subcontracting_relationship;
+DROP TABLE IF EXISTS employee;
+DROP TABLE IF EXISTS company;
 
 /**
  * TABLA company (EMPRESA)
  */
 DROP TABLE IF EXISTS company;
 CREATE TABLE company (
-	id INTEGER PRIMARY KEY AUTO_INCREMENT,
+	id BIGINT PRIMARY KEY AUTO_INCREMENT,
 	cif VARCHAR(16) NOT NULL UNIQUE,
 	name VARCHAR(32) NOT NULL,
 	country ENUM(
@@ -43,7 +46,7 @@ CREATE TABLE company (
  */
 DROP TABLE IF EXISTS employee;
 CREATE TABLE employee (
-	id INTEGER PRIMARY KEY AUTO_INCREMENT,
+	id BIGINT PRIMARY KEY AUTO_INCREMENT,
 	nif VARCHAR(9) NOT NULL UNIQUE,
 	name VARCHAR(32) NOT NULL,
 	surname VARCHAR(64),
@@ -76,7 +79,7 @@ CREATE TABLE employee (
 	job VARCHAR(64) NOT NULL,
 	department VARCHAR(64) NOT NULL,
 	additional_info VARCHAR(512),
-	company_id INTEGER NOT NULL,
+	company_id BIGINT NOT NULL,
 	FOREIGN KEY (company_id) REFERENCES company(id) ON DELETE CASCADE
 );
 
@@ -86,10 +89,10 @@ CREATE TABLE employee (
  */
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (
-	id INTEGER PRIMARY KEY AUTO_INCREMENT,
+	id BIGINT PRIMARY KEY AUTO_INCREMENT,
 	email VARCHAR(64) NOT NULL UNIQUE,
 	password VARCHAR(256) NOT NULL,
-	employee_id INTEGER NOT NULL,
+	employee_id BIGINT NOT NULL,
 	FOREIGN KEY (employee_id) REFERENCES employee(id) ON DELETE CASCADE
 );
 
@@ -99,8 +102,8 @@ CREATE TABLE users (
  */
 DROP TABLE IF EXISTS subcontracting_relationship;
 CREATE TABLE subcontracting_relationship (
-	contractor_id INTEGER NOT NULL,
-	subcontract_id INTEGER NOT NULL,
+	contractor_id BIGINT NOT NULL,
+	subcontract_id BIGINT NOT NULL,
 	start_date DATE NOT NULL,
 	end_date DATE,
 	additional_info VARCHAR(512),
@@ -116,15 +119,15 @@ CREATE TABLE subcontracting_relationship (
  */
 DROP TABLE IF EXISTS document;
 CREATE TABLE document (
-	id INTEGER PRIMARY KEY AUTO_INCREMENT,
+	id BIGINT PRIMARY KEY AUTO_INCREMENT,
 	validation_state ENUM ('OK', 'ER', 'VA', 'EX') NOT NULL,
-	contractor_id INTEGER NOT NULL,
-	subcontract_id INTEGER NOT NULL,
+	contractor_id BIGINT NOT NULL,
+	subcontract_id BIGINT NOT NULL,
 	name VARCHAR(128) NOT NULL,
 	date DATE NOT NULL,
 	expiration_date DATE,
 	validation_date DATE,
-	employee_id INTEGER,
+	employee_id BIGINT,
 	additional_info VARCHAR(256),
 	file_path VARCHAR(512),
 	FOREIGN KEY (contractor_id) REFERENCES company(id) ON DELETE CASCADE,
@@ -136,7 +139,6 @@ CREATE TABLE document (
  * TAREA PROGRAMADA POR EVENTO: comprueba la expiration_date de los documentos
  * y actualiza el validation_state de los caducados. Una vez al día.
  * */
-SET GLOBAL event_scheduler = ON;
 DROP EVENT IF EXISTS update_document_validation_state;
 CREATE EVENT update_document_validation_state
 ON SCHEDULE EVERY 1 DAY 
@@ -197,11 +199,6 @@ CREATE TRIGGER validate_document_update
 BEFORE UPDATE ON document
 FOR EACH ROW
 BEGIN
-	IF NEW.date != OLD.date THEN
-		SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'La fecha de emisión del documento no puede ser modificada.';
-	END IF;
-
 	IF NEW.validation_date IS NOT NULL AND NEW.validation_date < NEW.date THEN 
 		SIGNAL SQLSTATE '45000'
 		SET MESSAGE_TEXT = 'La nueva fecha de validación no puede ser anterior a la fecha de emisión del documento.';
