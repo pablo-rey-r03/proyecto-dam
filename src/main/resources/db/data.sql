@@ -27,7 +27,8 @@ VALUES
 INSERT INTO subcontracting_relationship (contractor_id, subcontract_id, start_date, end_date, additional_info)
 VALUES 
 (1, 2, '2024-01-01', '2027-01-01', 'Subcontratación de servicios tecnológicos'),
-(2, 3, '2024-02-01', '2027-02-01', 'Subcontratación para campañas de marketing');
+(2, 3, '2024-02-01', '2026-02-01', 'Subcontratación para campañas de marketing'),
+(3, 1, '2024-02-01', '2029-02-01', 'Subcontratación para gestión de contabilidad');
 
 
 COMMIT;
