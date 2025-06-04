@@ -1,63 +1,113 @@
-# proyecto-dam
-_Backend_ de mi proyecto integrado para DAM.
+# 🌟 MetaConti – DAM – Pablo Rey Ramos
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+## Índice
+1. [Introducción](#introducción)
+2. [Funcionalidades del Proyecto y Tecnologías Utilizadas](#funcionalidades-del-proyecto-y-tecnologías-utilizadas)
+3. [Guía de Instalación](#guía-de-instalación)
+4. [Guía de Uso](#guía-de-uso)
+5. [Enlace a la Documentación](#enlace-a-la-documentación)
+6. [Enlace a Figma de la Interfaz](#enlace-a-figma-de-la-interfaz)
+7. [Conclusión](#conclusión)
+8. [Contribuciones, Agradecimientos y Referencias](#contribuciones-agradecimientos-y-referencias)
+9. [Licencias](#licencias)
+10. [Contacto](#contacto)
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+---
 
-## Running the application in dev mode
+## Introducción
 
-You can run your application in dev mode that enables live coding using:
+_MetaConti_ es una aplicación web destinada a empresas contratistas y a sus subcontratas correspondientes. Ofrece un portal
+de gestión empresarial y documental, para iniciar contratos, validar documentos, modificar información, etc.
 
-```shell script
-./mvnw quarkus:dev
-```
+Hoy día, la subcontratación es un fenómeno cada vez más común, especialmente en entornos de grandes empresas donde se mueven
+grandes cantidades de dinero. Asociada a ello, existe una gran maraña burocrática y numerosas complejidades legales, laborales,
+judiciales y financieras. Por ello, las empresas contratistas requieren de un _software_ que les permita agilizar el trabajo
+y la gestión relacionada con sus subcontratas.
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+En esta aplicación, se busca aportar una solución para el problema de estas empresas, de forma que puedan subir documentos
+de forma segura y se pueda obtener y modificar la información de las subcontratas, todo desde una plataforma centralizada.
+<!--  
 
-## Packaging and running the application
+  
+Motivación  
+-->
 
-The application can be packaged using:
+---
 
-```shell script
-./mvnw package
-```
+## Funcionalidades del Proyecto y Tecnologías Utilizadas
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+<!--  
+Listado de funcionalidades principales  
+Tecnologías, frameworks y herramientas empleadas  
+-->
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+---
 
-If you want to build an _über-jar_, execute the following command:
+## Guía de Instalación
 
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
-```
+<!--  
+Pasos para clonar el repositorio  
+Dependencias y requisitos previos  
+Instrucciones para ejecutar la aplicación localmente  
+-->
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
+---
 
-## Creating a native executable
+## Guía de Uso
 
-You can create a native executable using:
+<!--  
+Capturas de pantalla o ejemplos de uso  
+Explicación de flujos principales (login, navegación, funcionalidades clave)  
+-->
 
-```shell script
-./mvnw package -Dnative
-```
+---
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
+## Enlace a la Documentación
 
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
-```
+[Documentación Completa](#)
+<!-- Reemplazar “#” con el enlace real a la documentación -->
 
-You can then execute your native executable with: `./target/proyecto-dam-1.0.0-SNAPSHOT-runner`
+---
 
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
+## Enlace a Figma de la Interfaz
 
-## Provided Code
+[Ver Interfaz en Figma](#)
+<!-- Reemplazar “#” con el enlace de Figma correspondiente -->
 
-### REST
+---
 
-Easily start your REST Web Services
+## Conclusión
 
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+<!--  
+Resumen de logros  
+Posibles mejoras futuras  
+Reflexión personal sobre el proyecto  
+-->
+
+---
+
+## Contribuciones, Agradecimientos y Referencias
+
+<!--  
+Quiénes han colaborado o aportado ideas  
+Agradecimientos a mentores, compañeros, recursos externos  
+Referencias (artículos, libros, repositorios)  
+-->
+
+---
+
+## Licencias
+
+<!--  
+Licencia(s) de código abierto utilizadas  
+Términos de redistribución y uso  
+-->
+
+---
+
+## Contacto
+
+<!--  
+Correo electrónico  
+LinkedIn, GitHub u otras redes profesionales  
+-->
