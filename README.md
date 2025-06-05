@@ -6,7 +6,7 @@
 3. [Guía de Instalación](#guía-de-instalación)
 4. [Guía de Uso](#guía-de-uso)
 5. [Enlace a la Documentación](#enlace-a-la-documentación)
-6. [Enlace a Figma de la Interfaz](#enlace-a-figma-de-la-interfaz)
+6. [Enlace a Figma de la Interfaz](#diseño-de-la-interfaz-en-figma)
 7. [Conclusión](#conclusión)
 8. [Contribuciones, Agradecimientos y Referencias](#contribuciones-agradecimientos-y-referencias)
 9. [Licencias](#licencias)
@@ -50,7 +50,7 @@ en un servidor físico con tiempos de arranque tediosos y alto coste de memoria.
 a su rápido despliegue en contenedores, su compilación a nativo con [GraalVM](https://www.graalvm.org) y su integración de la programación
 reactiva. Ofrece una gran suite de librerías, inyectables mediante "extensiones", y sigue muchas de las especificaciones y estándares
 más usados (CDI, JAX-RS, JPA, JTA, [MicroProfile](https://microprofile.io), [Vert.x](https://vertx.io), [Camel](https://camel.apache.org),
-[Jakarta EE](https://jakarta.ee), [OpenTelemetry](https://opentelemetry.io), etc).
+[Jakarta EE](https://jakarta.ee), [OpenTelemetry](https://opentelemetry.io), etc.)
 
 [React](https://react.dev) es una librería para JavaScript que permite al desarrollador construir la interfaz deseada a partir de
 piezas individuales reutilizables llamadas "componentes", construidas a partir de funciones básicas integradas en sus archivos que juntan
@@ -91,17 +91,20 @@ Explicación de flujos principales (login, navegación, funcionalidades clave)
 
 ---
 
-## Enlace a la Documentación
+## Documentación
 
 [Documentación Completa](#)
 <!-- Reemplazar “#” con el enlace real a la documentación -->
 
 ---
 
-## Enlace a Figma de la Interfaz
+## Diseño de la interfaz en Figma
 
-[Ver Interfaz en Figma](#)
-<!-- Reemplazar “#” con el enlace de Figma correspondiente -->
+En [este enlace](https://www.figma.com/proto/JGjq1dDmNDUdeyxRVTKuOp/MetaConti?node-id=0-1&t=omiFQAORmfdanFGR-1) podrá
+ver el diseño aproximado de la interfaz web en [Figma](https://www.figma.com/es-es/) a través de una simulación interactiva.
+
+Si, por el contrario, desea acceder al proyecto de Figma al completo con todos los componentes, haga clic en
+[este enlace](https://www.figma.com/design/JGjq1dDmNDUdeyxRVTKuOp/MetaConti?node-id=0-1&t=omiFQAORmfdanFGR-1).
 
 ---
 
@@ -115,7 +118,7 @@ Reflexión personal sobre el proyecto
 
 ---
 
-## Contribuciones, Agradecimientos y Referencias
+## Contribuciones, agradecimientos y referencias
 
 <!--  
 Quiénes han colaborado o aportado ideas  
