@@ -12,10 +12,21 @@ import io.quarkus.hibernate.orm.panache.PanacheRepository;
 @ApplicationScoped
 public class CompanyRepository implements PanacheRepository<Company> {
 
+    /**
+     * Obtiene un Optional de empresa
+     * @param id el ID de la empresa
+     * @return optional de empresa
+     */
     public Optional<Company> getCompanyById(Long id) {
         return findByIdOptional(id);
     }
 
+    /**
+     * Crea una nueva empresa
+     * @param dto objeto con los campos
+     * @return entidad creada
+     * @throws IllegalArgumentException al obtener el valor del código de país inexistente
+     */
     @Transactional
     public Company create(NewCompanyDTO dto) {
         try {
@@ -32,6 +43,11 @@ public class CompanyRepository implements PanacheRepository<Company> {
         }
     }
 
+    /**
+     * Elimina una empresa
+     * @param id ID de la empresa
+     * @return la entidad eliminada
+     */
     @Transactional
     public Company delete(Long id) {
         Company company = findByIdOptional(id).orElseThrow(() -> new NotFoundException("Empresa no encontrada."));
@@ -39,6 +55,12 @@ public class CompanyRepository implements PanacheRepository<Company> {
         return company;
     }
 
+    /**
+     * Actualiza una empresa
+     * @param id ID de la empresa
+     * @param companyDTO objeto con los campos
+     * @return la entidad actualizada
+     */
     @Transactional
     public Company update(Long id, NewCompanyDTO companyDTO) {
         Optional<Company> opt = findByIdOptional(id);

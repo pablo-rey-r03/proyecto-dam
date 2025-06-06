@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Objeto que se devolverá en todos los errores lanzados por la API, de forma que se capturará fácilmente la causa
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

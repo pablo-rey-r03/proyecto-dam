@@ -4,6 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Respuesta del servidor asociada a una entidad declarada como tipo genérico
+ * @param <E> Entidad devuelta
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

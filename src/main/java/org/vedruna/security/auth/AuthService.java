@@ -27,6 +27,11 @@ public class AuthService {
     @Inject
     UserRepository userRepository;
 
+    /**
+     * Proceso de registro
+     * @param registerDTO Objeto con campos
+     * @return empleado creado junto con el usuario
+     */
     @Transactional
     public Employee register(RegisterDTO registerDTO) {
 

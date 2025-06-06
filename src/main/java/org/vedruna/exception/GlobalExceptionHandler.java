@@ -23,6 +23,10 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Arrays;
 import io.quarkus.security.UnauthorizedException;
 
+/**
+ * Clase que gestiona la mayoría de las excepciones de la API. Obtiene la causa raíz y devuelve una respuesta formateada
+ * con la causa completa.
+ */
 @Provider
 @ApplicationScoped
 public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {

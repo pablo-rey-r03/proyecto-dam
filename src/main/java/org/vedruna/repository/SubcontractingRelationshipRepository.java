@@ -19,18 +19,34 @@ public class SubcontractingRelationshipRepository implements PanacheRepository<S
     @Inject
     CompanyRepository companyRepository;
 
+    /**
+     * Obtiene las relaciones según contratista
+     * @param contractorId ID de la empresa contratista
+     * @return lista de relaciones
+     */
     public List<SubcontractingRelationship> findByContractorId(Long contractorId) {
         if (companyRepository.findByIdOptional(contractorId).isEmpty()) throw new NotFoundException("No hay empresas con id " + contractorId);
 
         return find("contractor.id", contractorId).list();
     }
 
+    /**
+     * Obtiene las relaciones según subcontrata
+     * @param subcontractId ID de la empresa subcontratada
+     * @return lista de relaciones
+     */
     public List<SubcontractingRelationship> findBySubcontractId(Long subcontractId) {
         if (companyRepository.findByIdOptional(subcontractId).isEmpty()) throw new NotFoundException("No hay empresas con id " + subcontractId);
 
         return find("subcontract.id", subcontractId).list();
     }
 
+    /**
+     * Obtiene una relación según contratista y subcontrata
+     * @param contractorId ID de empresa contratista
+     * @param subcontractId ID de empresa subcontratada
+     * @return relación
+     */
     public SubcontractingRelationship findByIds(Long contractorId, Long subcontractId) {
         if (companyRepository.findByIdOptional(contractorId).isEmpty()) throw new NotFoundException("No hay empresas con id " + contractorId);
         if (companyRepository.findByIdOptional(subcontractId).isEmpty()) throw new NotFoundException("No hay empresas con id " + subcontractId);
@@ -41,6 +57,13 @@ public class SubcontractingRelationshipRepository implements PanacheRepository<S
         return sr.get();
     }
 
+    /**
+     * Crea una relación
+     * @param contractorId ID del contratista
+     * @param subcontractId ID de subcontrataa
+     * @param srDTO objeto con campos
+     * @return nueva relación
+     */
     @Transactional
     public SubcontractingRelationship create (Long contractorId, Long subcontractId, NewSubcontractingRelationshipDTO srDTO) {
         try {
@@ -64,6 +87,12 @@ public class SubcontractingRelationshipRepository implements PanacheRepository<S
         }
     }
 
+    /**
+     * Elimina una relación
+     * @param contractorId ID del contratista
+     * @param subcontractId ID de subcontrata
+     * @return relación borrada
+     */
     @Transactional
     public SubcontractingRelationship delete (Long contractorId, Long subcontractId) {
         try {
@@ -76,6 +105,13 @@ public class SubcontractingRelationshipRepository implements PanacheRepository<S
         }
     }
 
+    /**
+     * Actualiza relación
+     * @param contractorId ID de contratista
+     * @param subcontractId ID de subcontrata
+     * @param srDTO objeto con campos
+     * @return relación actualizada
+     */
     @Transactional
     public SubcontractingRelationship update (Long contractorId, Long subcontractId, NewSubcontractingRelationshipDTO srDTO) {
         try {

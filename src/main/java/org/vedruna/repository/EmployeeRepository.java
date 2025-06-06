@@ -22,6 +22,11 @@ public class EmployeeRepository implements PanacheRepository<Employee> {
         return find("nif", nif).firstResultOptional();
     }
 
+    /**
+     * Crea un nuevo empleado
+     * @param dto Objeto con campos
+     * @return nueva entidad
+     */
     @Transactional
     public Employee create(NewEmployeeDTO dto) {
         if (findByNif(dto.getNif()).isPresent()) throw new IllegalArgumentException("Ya existe un empleado con este NIF");
@@ -48,6 +53,12 @@ public class EmployeeRepository implements PanacheRepository<Employee> {
         return employee;
     }
 
+    /**
+     * Actualiza un empleado
+     * @param dto Objeto con campos
+     * @param id ID del empleado
+     * @return entidad actualizada
+     */
     @Transactional
     public Employee update(NewEmployeeDTO dto, Long id) {
         Employee employee = findById(id);
@@ -71,6 +82,11 @@ public class EmployeeRepository implements PanacheRepository<Employee> {
         return employee;
     }
 
+    /**
+     * Elimina un empleado
+     * @param id ID del empleado
+     * @return empleado eliminado
+     */
     @Transactional
     public Employee delete(Long id) {
         if (findByIdOptional(id).isEmpty()) throw new NotFoundException("No se ha encontrado un empleado con id " + id);
