@@ -2,13 +2,13 @@
 
 ## Índice
 1. [Introducción](#introducción)
-2. [Funcionalidades del Proyecto y Tecnologías Utilizadas](#funcionalidades-del-proyecto-y-tecnologías-utilizadas)
-3. [Guía de Instalación](#guía-de-instalación)
-4. [Guía de Uso](#guía-de-uso)
-5. [Enlace a la Documentación](#enlace-a-la-documentación)
-6. [Enlace a Figma de la Interfaz](#diseño-de-la-interfaz-en-figma)
+2. [Funcionalidades del proyecto y tecnologías utilizadas](#funcionalidades-del-proyecto-y-tecnologías-utilizadas)
+3. [Guía de instalación](#guía-de-instalación)
+4. [Guía de uso](#guía-de-uso)
+5. [Documentación](#documentación)
+6. [Diseño de la interfaz en Figma](#diseño-de-la-interfaz-en-figma)
 7. [Conclusión](#conclusión)
-8. [Contribuciones, Agradecimientos y Referencias](#contribuciones-agradecimientos-y-referencias)
+8. [Contribuciones, agradecimientos y referencias](#contribuciones-agradecimientos-y-referencias)
 9. [Licencias](#licencias)
 10. [Contacto](#contacto)
 
@@ -29,7 +29,7 @@ de forma segura y se pueda obtener y modificar la información de las subcontrat
 
 ---
 
-## Funcionalidades del Proyecto y Tecnologías Utilizadas
+## Funcionalidades del proyecto y tecnologías utilizadas
 
 La aplicación _MetaConti_ permitirá:
 - El registro y autenticación de usuarios.
@@ -73,7 +73,7 @@ instancia de un contenedor de [Render](https://render.com) que es consumida por 
 
 ---
 
-## Guía de Instalación
+## Guía de instalación
 
 <!--  
 Pasos para clonar el repositorio  
@@ -151,11 +151,11 @@ Tras instalar las dependencias y comprobar que se ha compilado correctamente, pu
   mvn quarkus:dev
 ```
 La API estará disponible en ``http://localhost:8080/metaconti/api/v1`` (o el _endpoint_ raíz configurado). Las CORS están
-habilitadas en el ``application.properties``, así que tu _frontend_ podrá consumirla sin problema.
+habilitadas en el archivo de configuración ``application.properties``, así que tu _frontend_ podrá consumirla sin problema.
 
 ---
 
-## Guía de Uso
+## Guía de uso
 
 <!--  
 Capturas de pantalla o ejemplos de uso  
@@ -166,8 +166,8 @@ Explicación de flujos principales (login, navegación, funcionalidades clave)
 
 ## Documentación
 
-[Documentación Completa](#)
-<!-- Reemplazar “#” con el enlace real a la documentación -->
+En [este enlace](https://github.com/pablo-rey-r03/proyecto-dam/blob/main/MetaConti.pdf) puede consultar la documentación
+avanzada del proyecto, especialmente los diagramas y modelos UML de la aplicación.
 
 ---
 
