@@ -53,22 +53,23 @@ más usados (CDI, JAX-RS, JPA, JTA, [MicroProfile](https://microprofile.io), [Ve
 [Jakarta EE](https://jakarta.ee), [OpenTelemetry](https://opentelemetry.io), etc.)
 
 [React](https://react.dev) es una librería para JavaScript que permite al desarrollador construir la interfaz deseada a partir de
-piezas individuales reutilizables llamadas "componentes", construidas a partir de funciones básicas integradas en sus archivos que juntan
-marcado con código, llamados JSX. Para añadir funcionalidades extra propias de una aplicación reactiva de _frontend_, React se vale de
-los llamados "_hooks_" para establecer variables renderizables, navegación, ejecuciones en bucle, referencias a elementos renderizados, etc.
+piezas individuales reutilizables llamadas "componentes", construidas a partir de funciones básicas integradas en sus archivos
+particulares, llamados JSX, que juntan marcado con código. Para añadir funcionalidades extra propias de una aplicación reactiva
+de _frontend_, React se vale de los llamados "_hooks_" para establecer variables renderizables, navegación, ejecuciones en bucle,
+referencias a elementos renderizados, etc.
 
-Para crear este proyecto de React se ha utilizado [Vite](https://vite.dev), una herramienta de compilación para _frontend_ con una capacidad de
-servicio increíblemente veloz y HMR (capacidad de reflejar los cambios en la interfaz) muy rápida. Ya le da soporte a algunos de los
-_frameworks_ más usados para el desarrollo web, como son [Angular](https://angular.dev/), [VueJS](https://vuejs.org/), [Preact](https://preactjs.com/),
-[Astro](https://astro.build/), [Laravel](https://laravel.com/), etc. Al tener compatibilidad con [TypeScript](https://www.typescriptlang.org),
-se ha optado por elegir este lenguaje para la aplicación web, dada la robustez que aporta su tipado.
+Para crear este proyecto de React se ha utilizado [Vite](https://vite.dev), una herramienta de compilación para _frontend_
+con una capacidad de servicio increíblemente veloz y HMR (capacidad de reflejar los cambios en la interfaz) muy rápida. Ya
+le da soporte a algunos de los _frameworks_ más usados para el desarrollo web, como son [Angular](https://angular.dev/),
+[VueJS](https://vuejs.org/), [Preact](https://preactjs.com/), [Astro](https://astro.build/), [Laravel](https://laravel.com/), etc.
+Al tener compatibilidad con [TypeScript](https://www.typescriptlang.org), se ha optado por elegir este lenguaje para la aplicación
+web, dada la robustez que aporta su tipado.
 
-En el _frontend_ también se ha empleado [TailwindCSS](https://tailwindcss.com) para agilizar el estilizado de los componentes, manteniendo un diseño moderno y
-minimalista.
+En el _frontend_ también se ha empleado [TailwindCSS](https://tailwindcss.com) para agilizar el estilizado de los componentes,
+manteniendo un diseño moderno y minimalista.
 
-<!--  
-Tecnologías, frameworks y herramientas empleadas  
--->
+La base de datos de producción se ha alojado en [FreeSQLDatabase](https://www.freesqldatabase.com). La API se ejecuta en una
+instancia de un contenedor de [Render](https://render.com) que es consumida por la aplicación web, desplegada en [Vercel](https://vercel.com).
 
 ---
 
@@ -79,6 +80,78 @@ Pasos para clonar el repositorio
 Dependencias y requisitos previos  
 Instrucciones para ejecutar la aplicación localmente  
 -->
+Antes de clonar y ejecutar los proyectos localmente, debe asegurarse de que tiene instalado en su sistema:
+- [Git](https://git-scm.com)
+  - Necesario para el clonado de los repositorios.
+  - Puede comprobar su versión de Git instalada con:
+  ```bash
+  git -v
+  ```
+- [Java 17](https://jdk.java.net/archive/)
+    - La versión de Java más compatible con Quarkus 3.x, y la más usada actualmente.
+    - Puede comprobar su versión de Java instalada con:
+    ```bash
+    java -version
+    ```
+    Si no tiene Java 17, puede descargarlo buscándolo en la web del enlace, o instalarlo mediante su gestor de paquetes.
+
+
+- [Maven](https://maven.apache.org)
+    - Herramienta de construcción utilizada por el _backend_ de Quarkus.
+    - Puede comprobar su versión de Maven instalada con:
+    ```bash
+    mvn -v
+    ```
+    Si no tiene Maven, puede descargarlo en la web del enlace, o instalarlo mediante su gestor de paquetes.
+
+
+- [Node.js](https://nodejs.org/es) y [NPM](https://www.npmjs.com)
+    - Vite y React utilizan Node.js para ejecutarse. NPM es el gestor de paquetes de Node.js que te permitirá instalar las dependencias.
+    - Puede comprobar sus versiones de Node.js y NPM instaladas con:
+    ```bash
+    node -v
+    npm -v
+    ```
+    Si no tiene Node.js, puede descargarlo en la web del enlace.
+
+
+- [MySQL Server](https://www.mysql.com)
+    - Versión 5.7 o superior.
+    - Asegúrate de poder acceder a MySQL localmente en el puerto 3306.
+    - Puede comprobar su versión de MySQL instalada con:
+    ```bash
+    mysql --version
+    ```
+    Si no tiene MySQL, puede descargarlo en la web del enlace.
+
+Para clonar los repositorios sólo necesita ejecutar los siguientes comandos:
+- API de Quarkus
+```bash
+# Sitúate en la carpeta donde quieras clonar el backend
+cd ~/Proyectos
+git clone https://github.com/pablo-rey-r03/proyecto-dam.git
+cd proyecto-dam
+```
+- _Frontend_ de React
+```bash
+# Sitúate en la carpeta donde quieras clonar el frontend
+cd ~/Proyectos
+git clone https://github.com/pablo-rey-r03/react-dam.git
+cd react-dam
+```
+Configura MySQL para que se conecte correctamente con la API de Quarkus. Por defecto, la API de Quarkus se conectará a una
+base de datos MySQL `sql7782531` con usuario `root` y contraseña `root`.
+
+En la carpeta raíz del _backend_, ejecuta:
+```bash
+  mvn clean install
+```
+Tras instalar las dependencias y comprobar que se ha compilado correctamente, puedes levantar la API en modo desarrollo con:
+```bash
+  mvn quarkus:dev
+```
+La API estará disponible en ``http://localhost:8080/metaconti/api/v1`` (o el _endpoint_ raíz configurado). Las CORS están
+habilitadas en el ``application.properties``, así que tu _frontend_ podrá consumirla sin problema.
 
 ---
 
